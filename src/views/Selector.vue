@@ -1,24 +1,17 @@
 <template>
   <div id="selector">
-    <select class="city" v-model="value" >
-      <!-- <option value="">請選擇</option> -->
-      <option v-for="(item, index) in cities" :value="index" >{{item.name}}</option>
-    </select>
-
-    <select class="town" v-model="townValue">
-      <option v-for="(item, index) in cities[value].areas" :value="index" >{{item.name}}</option>
-    </select>
-
-    <div class="list">
-      <span class="city">{{citySelected}}</span>
-      <span class="town">{{townSelected}}</span>
-      <span class="zip">{{zipNumber}}</span>
-    </div>
+    <Selector v-bind:value="cityIndex" v-bind:list="cities" ></Selector>
+    <Selector v-bind:value="townIndex" v-bind:list="areas" ></Selector>
   </div>
 </template>
 
 <script>
+import Selector from "@/components/Selector.vue";
+
 export default {
+  components: {
+    Selector
+  },
   data() {
     return {
       cities: [
@@ -58,35 +51,16 @@ export default {
           ],
         },
       ],
-      value: 0,
-      townValue: 0,
-      citySelected: '',
-      townSelected: '',
-      zipNumber: '',
+      cityIndex: 0,
+      townIndex: 0,
+      areas: [],
     }
   },
-  created() {
-    this.getCityName();
-    this.getTownSelectList();
-  },
-  methods: {
-    getCityName() {
-      this.citySelected = this.cities[this.value].name;
-    },
-    getTownName() {
-      this.townSelected = this.cities[this.value].areas[this.townValue].name;
-    },
-    getTownSelectList() {
-      this.townSelected = this.cities[this.value].areas[0].name;
-      this.zipNumber = this.cities[this.value].areas[0].zip;
-    },
-    changeZip() {
-      this.zipNumber = this.cities[this.value].areas[this.townValue].zip;
-    },
+  computed: {
+
   },
   watch: {
-    value: ['getCityName', 'getTownSelectList'],
-    townValue: ['changeZip']
+
   }
 }
 </script>
@@ -101,7 +75,7 @@ export default {
 }
 
 select {
-  margin-right: 8px;
+  margin: 8px;
 }
 
 .list {
@@ -112,14 +86,6 @@ select {
 
 span {
   padding-right: 8px;
-}
-
-span::after {
-  content: ",";
-}
-
-.list span:last-child::after {
-  content: "";
 }
 
 span.city::before {
