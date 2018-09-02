@@ -100,10 +100,26 @@ export default {
   text-align: left;
 }
 
+select {
+  margin-right: 8px;
+}
+
 .list {
   padding: 8px 0;
   margin: 4px;
   border-top: 1px solid lightslategrey;
+}
+
+span {
+  padding-right: 8px;
+}
+
+span::after {
+  content: ",";
+}
+
+.list span:last-child::after {
+  content: "";
 }
 
 span.city::before {
