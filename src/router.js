@@ -22,6 +22,11 @@ export default new Router({
       path: '/todolist',
       name: 'todolist',
       component: () => import('./views/TodoList.vue')
+    },
+    {
+      path: '/selector',
+      name: 'selector',
+      component: () => import('./views/Selector.vue')
     }
   ]
-})
+});
