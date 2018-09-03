@@ -6,7 +6,7 @@
     <Selector v-bind:value="townIndex"
               v-bind:list="areas"
               v-on:selectIndex="getTownSelect($event)"></Selector>
-    <span class="zipCode">zip code: {{zipCode}}</span>
+    <span class="zip">{{zipCode}}</span>
   </div>
 </template>
 
@@ -110,18 +110,11 @@ select {
 
 span {
   padding-right: 8px;
-}
-
-span.city::before {
-  content: '縣市:';
-}
-
-span.town::before {
-  content: '鄉鎮:';
+  margin: 8px;
 }
 
 span.zip::before {
-  content: '郵遞區號:';
+  content: '郵遞區號: ';
 }
 
 </style>
