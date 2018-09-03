@@ -1,7 +1,12 @@
 <template>
   <div id="selector">
-    <Selector v-bind:value="cityIndex" v-bind:list="cities" ></Selector>
-    <Selector v-bind:value="townIndex" v-bind:list="areas" ></Selector>
+    <Selector v-bind:value="cityIndex"
+              v-bind:list="cities"
+              v-on:selectIndex="getCitySelect($event)" ></Selector>
+    <Selector v-bind:value="townIndex"
+              v-bind:list="areas"
+              v-on:selectIndex="getTownSelect($event)"></Selector>
+    <span class="zipCode">zip code: {{zipCode}}</span>
   </div>
 </template>
 
@@ -53,14 +58,33 @@ export default {
       ],
       cityIndex: 0,
       townIndex: 0,
+      zipCode: '',
       areas: [],
     }
   },
+  methods: {
+    getCitySelect(val) {
+      this.cityIndex = val;
+    },
+    getTownSelect(val) {
+      this.townIndex = val;
+    },
+    setZip() {
+      this.zipCode = this.areas[this.townIndex].zip || '';
+    },
+    setTown() {
+      this.areas = this.cities[this.cityIndex].areas || [];
+    },
+  },
   computed: {
-
+  },
+  created() {
+    this.setTown();
+    this.setZip();
   },
   watch: {
-
+    cityIndex: ['setTown', 'setZip'],
+    townIndex: ['setZip'],
   }
 }
 </script>
