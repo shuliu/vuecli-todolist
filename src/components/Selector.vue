@@ -27,8 +27,6 @@ export default {
   created() {
     this.selectName = this.options.length > 0 ? this.options[0].name : this.selectName;
   },
-  computed: {
-  },
   methods: {
     showInfo() {
       return this.selectName !== '';

@@ -4,9 +4,9 @@
               v-bind:list="cities"
               v-on:selectIndex="getCitySelect($event)" ></Selector>
     <Selector v-bind:value="townIndex"
-              v-bind:list="areas"
+              v-bind:list="getTown"
               v-on:selectIndex="getTownSelect($event)"></Selector>
-    <span class="zip">{{zipCode}}</span>
+    <span class="zip">{{getZip}}</span>
   </div>
 </template>
 
@@ -58,8 +58,6 @@ export default {
       ],
       cityIndex: 0,
       townIndex: 0,
-      zipCode: '',
-      areas: [],
     }
   },
   methods: {
@@ -69,52 +67,23 @@ export default {
     getTownSelect(val) {
       this.townIndex = val;
     },
-    setZip() {
-      this.zipCode = this.areas[this.townIndex].zip || '';
-    },
-    setTown() {
-      this.areas = this.cities[this.cityIndex].areas || [];
-    },
   },
   computed: {
+    getTown: function() {
+      return this.cities[this.cityIndex].areas || [];
+    },
+    getZip: function() {
+      const areas = this.getTown || [];
+      if(areas.length <= 0) {
+        return '';
+      }
+      return areas[this.townIndex].zip || '';
+    }
   },
-  created() {
-    this.setTown();
-    this.setZip();
-  },
-  watch: {
-    cityIndex: ['setTown', 'setZip'],
-    townIndex: ['setZip'],
-  }
 }
 </script>
 
 
 <style>
-
-#selector {
-  width: 80%;
-  max-width: 400px;
-  text-align: left;
-}
-
-select {
-  margin: 8px;
-}
-
-.list {
-  padding: 8px 0;
-  margin: 4px;
-  border-top: 1px solid lightslategrey;
-}
-
-span {
-  padding-right: 8px;
-  margin: 8px;
-}
-
-span.zip::before {
-  content: '郵遞區號: ';
-}
 
 </style>
