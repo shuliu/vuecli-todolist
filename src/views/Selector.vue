@@ -1,11 +1,7 @@
 <template>
   <div id="selector">
-    <Selector v-bind:value="cityIndex"
-              v-bind:list="cities"
-              v-on:selectIndex="getCitySelect($event)" ></Selector>
-    <Selector v-bind:value="townIndex"
-              v-bind:list="getTown"
-              v-on:selectIndex="getTownSelect($event)"></Selector>
+    <Selector v-model="cityIndex" :list="getCity"></Selector>
+    <Selector v-model="townIndex" :list="getTown"></Selector>
     <span class="zip">{{getZip}}</span>
   </div>
 </template>
@@ -60,15 +56,10 @@ export default {
       townIndex: 0,
     }
   },
-  methods: {
-    getCitySelect(val) {
-      this.cityIndex = val;
-    },
-    getTownSelect(val) {
-      this.townIndex = val;
-    },
-  },
   computed: {
+    getCity() {
+      return this.cities || [];
+    },
     getTown: function() {
       return this.cities[this.cityIndex].areas || [];
     },
@@ -78,6 +69,11 @@ export default {
         return '';
       }
       return areas[this.townIndex].zip || '';
+    }
+  },
+  watch: {
+    cityIndex() {
+      this.townIndex = 0;
     }
   },
 }

@@ -1,10 +1,10 @@
 <template>
   <div class="select">
     <select v-model="selectIndex" >
-      <option v-for="(item, key) in options" :key="key" :value="key">{{item.name}}</option>
+      <option v-for="(item, key) in list" :key="key" :value="key">{{item.name}}</option>
     </select>
 
-    <span v-if="showInfo()">{{selectIndex}}, {{selectName}}</span>
+    <span v-if="showInfo()">{{this.value}}, {{getSelectName()}}</span>
   </div>
 </template>
 
@@ -17,36 +17,27 @@ export default {
     },
     value: Number
   },
-  data() {
-    return {
-      options: this.list,
-      selectIndex: this.value,
-      selectName: ''
-    }
-  },
-  created() {
-    this.selectName = this.options.length > 0 ? this.options[0].name : this.selectName;
-  },
   methods: {
     showInfo() {
-      return this.selectName !== '';
+      return this.list.length > 0;
     },
     getSelectName() {
-      this.selectName = this.options.length > 0 ? this.options[this.selectIndex].name : '';
+      return this.list.length > 0 ? this.list[this.value].name : '';
     },
-    emitSelectIndex() {
-      this.$emit('selectIndex', this.selectIndex);
-    },
-    updateOptions() {
-      this.options = this.list;
-    },
-    resetIndex() {
-      this.selectIndex = 0;
+  },
+  computed: {
+    selectIndex: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit('input', val);
+      }
     }
   },
   watch: {
-    selectIndex: ['getSelectName', 'emitSelectIndex'],
-    list: ['updateOptions', 'resetIndex'],
+    selectIndex: ['getSelectName'],
+    list: ['getSelectName']
   }
 }
 </script>

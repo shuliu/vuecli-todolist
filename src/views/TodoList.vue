@@ -1,10 +1,14 @@
 <template>
   <div id="todolist">
-    
+
     <input v-model="newTodo" v-on:keyup.enter="addTodo" />
 
     <ul class="lists">
-      <li v-for="(item, index) in todolist" :key="index" @click="removeItem(index)">{{item.content}}</li>
+      <li v-for="(item, index) in todolist"
+          :key="index"
+          @click="removeItem(index)"
+          transition="item"
+      >{{item.content}}</li>
     </ul>
   </div>
 </template>
@@ -29,6 +33,15 @@ export default {
     },
     removeItem(index) {
       this.todolist.splice(index, 1);
+    },
+    beforeAppear: function(el) {
+      console.log('beforeAppear')
+    },
+    appear: function(el) {
+      console.log('appear!')
+    },
+    afterAppear: function(el) {
+      console.log('afterAppear!')
     }
   }
 }
@@ -61,4 +74,12 @@ ul.lists li:hover {
   color: lightcoral;
   text-decoration: line-through;
 }
+
+.fade-enter-active  { animation: go 2s }
+
+@keyframes go {
+  from { background: #fff; }
+  to { background: #999; }
+}
+
 </style>
