@@ -1,21 +1,9 @@
-# todolist
+# Todolist
 
-## Project setup
-```
-yarn install
-```
+# Selector
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## Start api server
 
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Lints and fixes files
-```
-yarn run lint
+```bash
+json-server --watch cities.json
 ```
