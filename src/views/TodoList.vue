@@ -34,15 +34,6 @@ export default {
     removeItem(index) {
       this.todolist.splice(index, 1);
     },
-    beforeAppear: function(el) {
-      console.log('beforeAppear')
-    },
-    appear: function(el) {
-      console.log('appear!')
-    },
-    afterAppear: function(el) {
-      console.log('afterAppear!')
-    }
   }
 }
 </script>
